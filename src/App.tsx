@@ -22,6 +22,7 @@ export function App() {
 
   let [filter, setFilter] = useState<FilterValueType>('все')
 
+
   function changeTaskStatus (id: string, isDone: boolean){
    let task = tasks.find(t=> t.id === id)
     if (task){
