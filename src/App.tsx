@@ -1,26 +1,63 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState} from 'react';
 import './App.css';
+import {Todolist} from "./Todolist";
+import {v1} from "uuid";
 
-function App() {
+export type TasksType = {
+  id: string
+  isDone: boolean
+  title: string
+}
+
+export type FilterValueType = 'все' |'активные' | 'завершенные'
+
+
+export function App() {
+
+  let [tasks, setTasks] = useState( [
+    {id: v1(), isDone: true, title: "Мы"},
+    {id: v1(), isDone: false, title: "можем"},
+    {id: v1(), isDone: true, title: "многое"}
+  ]);
+
+  let [filter, setFilter] = useState<FilterValueType>('все')
+
+  function addTask(title: string){
+    let newTask = {id: v1(), isDone: false, title: title}
+    let newTasks = [newTask, ...tasks]
+    setTasks(newTasks)
+  }
+
+
+  function removeTask(id: string){
+    let newTasks = tasks.filter(t=>t.id !== id)
+      setTasks(newTasks)
+    }
+
+    function filtredTasks (select: FilterValueType){
+    setFilter(select)
+    }
+
+    let tasksForTodolist = tasks
+  if(filter === 'активные'){
+    tasksForTodolist = tasks.filter(t=>!t.isDone)
+  }
+  if(filter==='завершенные'){
+    tasksForTodolist = tasks.filter(t=>t.isDone)
+  }
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+      <Todolist title="Отрывок"
+                tasks={tasksForTodolist}
+                addTask={addTask}
+                removeTask={removeTask}
+                filtredTasks={filtredTasks}
+      />
+
+
     </div>
   );
 }
 
-export default App;
