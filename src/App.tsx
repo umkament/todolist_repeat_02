@@ -22,12 +22,19 @@ export function App() {
 
   let [filter, setFilter] = useState<FilterValueType>('все')
 
+  function changeTaskStatus (id: string, isDone: boolean){
+   let task = tasks.find(t=> t.id === id)
+    if (task){
+      task.isDone=isDone
+    }
+    setTasks([...tasks])
+  }
+
   function addTask(title: string){
     let newTask = {id: v1(), isDone: false, title: title}
     let newTasks = [newTask, ...tasks]
     setTasks(newTasks)
   }
-
 
   function removeTask(id: string){
     let newTasks = tasks.filter(t=>t.id !== id)
@@ -54,6 +61,7 @@ export function App() {
                 addTask={addTask}
                 removeTask={removeTask}
                 filtredTasks={filtredTasks}
+                changeTaskStatus={changeTaskStatus}
       />
 
 

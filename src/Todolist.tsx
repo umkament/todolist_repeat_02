@@ -7,6 +7,7 @@ export type PropsType = {
   addTask: (title: string)=>void
   removeTask: (id: string)=>void
   filtredTasks: (select: FilterValueType)=>void
+  changeTaskStatus: (id: string, isDone: boolean)=>void
 
 }
 
@@ -45,8 +46,14 @@ if (e.charCode === 13){
 
       {props.tasks.map((t)=>{
         const removeTaskHandler = ()=>{props.removeTask(t.id)}
+        const checkedInputHandler = (e: ChangeEvent<HTMLInputElement>) => {props.changeTaskStatus(t.id, e.currentTarget.checked)
+
+        }
      return <li key={t.id}>
-        <input type="checkbox" checked={t.isDone}/>
+        <input type="checkbox"
+               checked={t.isDone}
+               onChange={checkedInputHandler}
+        />
         <span>{t.title}</span>
        <button onClick={removeTaskHandler}>X</button>
       </li>
