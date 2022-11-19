@@ -15,8 +15,8 @@ export function Todolist(props: PropsType) {
 
   let [title, setTitle] = useState('')
 
-  const inputOnChangeHandler = (e: ChangeEvent<HTMLInputElement>) => { setTitle(e.currentTarget.value)
-
+  const inputOnChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.currentTarget.value)
   }
 
   const inputOnKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
@@ -27,8 +27,13 @@ if (e.charCode === 13){
   }
 
   const buttonOnClickHandler = () => {
-    props.addTask(title)
-    setTitle("")
+    //если затримленная таска не равна пустой строке,
+    //тогда добавляй эту таску предварительно удалив пробелы с двух сторон
+    //после чего перезатри title (сделай его пустым снова)
+   if (title.trim()!=="") {
+     props.addTask(title.trim())
+     setTitle("")
+   }
   }
   const allHandler = () => {props.filtredTasks('все')}
   const activeHandler = () => {props.filtredTasks('активные')}
