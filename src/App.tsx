@@ -58,6 +58,7 @@ export function App() {
     <div className="App">
 
       <Todolist title="Отрывок"
+                filter={filter}
                 tasks={tasksForTodolist}
                 addTask={addTask}
                 removeTask={removeTask}
