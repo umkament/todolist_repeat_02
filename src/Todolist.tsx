@@ -1,5 +1,6 @@
-import React, {ChangeEvent, KeyboardEvent, useState} from 'react';
+import React, {ChangeEvent} from 'react';
 import {FilterValueType, TasksType} from "./App";
+import {AddItemForm} from "./AddItemForm";
 
 export type PropsType = {
   id: string
@@ -16,66 +17,22 @@ export type PropsType = {
 
 export function Todolist(props: PropsType) {
 
-  let [title, setTitle] = useState('')
-  let [error, setError] = useState<string>('')
 
-  const inputOnChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.currentTarget.value)
-  }
-
-  const inputOnKeyPressHandler = (e: KeyboardEvent<HTMLInputElement>) => {
-    //если мы попадаем в эту функцию, значит какая-то из кнопок была нажата
-    //поэтому сначала обнуляем ошибку
-    //если нажата кнопка Enter и тайтл не равен пустоте, то
-    //добавляем таску затримленную по краям (без пробелов)
-    //после чего обнуляем стейт с тасками
-    //если нажата кнопка Enter и тайтл равен пустоте, то
-    //отрисовываем ошибку с текстом
-    setError('')
-    if (e.charCode === 13 && title.trim() !== "") {
-      props.addTask(title.trim(),props.id)
-      setTitle("")
-    }
-    if (e.charCode === 13 && title.trim() === '') {
-      setError('title is requered')
-    }
-  }
-
-  const buttonOnClickHandler = () => {
-    //если мы попадаем в эту функцию, значит какая-то из кнопок была нажата
-    //поэтому сначала обнуляем ошибку
-    //если затримленная таска не равна пустой строке,
-    //тогда добавляй эту таску предварительно удалив пробелы с двух сторон
-    //после чего перезатри title (сделай его пустым снова)
-    //иначе, если условие не совпадает, отрисовывай ошибку с текстом
-   setError('')
-    if (title.trim()!=="") {
-     props.addTask(title.trim(), props.id)
-     setTitle("")
-   }
-   else {
-     setError('title is requered')
-   }
-  }
   const allHandler = () => {props.filtredTasks('все', props.id)}
   const activeHandler = () => {props.filtredTasks('активные', props.id)}
   const completedHandler = () =>{props.filtredTasks('завершенные', props.id)}
 const removeTodolistHandler = () => {
   props.removeTodolist(props.id)
 }
+const addTask = (title: string) => {
+    props.addTask(title, props.id)
+}
 
   return <div>
     <h3>{props.title}
       <button onClick={removeTodolistHandler}>x</button></h3>
-    <div>
-    <input value={title}
-           onChange={inputOnChangeHandler}
-           onKeyPress={inputOnKeyPressHandler}
-           className={error? "error" : ''}
-    />
-    <button onClick={buttonOnClickHandler}>+</button>
-    {error && <div className='error-message'>{error}</div>}
-    </div>
+    <AddItemForm addItem={addTask}/>
+
     <ul>
       {props.tasks.map((t)=>{
         const removeTaskHandler = ()=>{props.removeTask(t.id, props.id)}
