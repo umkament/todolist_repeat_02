@@ -1,6 +1,7 @@
 import React, {ChangeEvent} from 'react';
 import {FilterValueType, TasksType} from "./App";
 import {AddItemForm} from "./AddItemForm";
+import {EditableSpan} from "./EditableSpan";
 
 export type PropsType = {
   id: string
@@ -11,8 +12,9 @@ export type PropsType = {
   removeTask: (id: string, todolistID: string)=>void
   filtredTasks: (select: FilterValueType, todolistID: string)=>void
   changeTaskStatus: (id: string, isDone: boolean, todolistID: string)=>void
+  changeTaskTitle: (id: string, newValue: string, todolistID: string)=>void
   removeTodolist: (todolistID: string)=>void
-
+  changeTodolistTitle: (newTitle: string,todolistID: string)=>void
 }
 
 export function Todolist(props: PropsType) {
@@ -27,17 +29,22 @@ const removeTodolistHandler = () => {
 const addTask = (title: string) => {
     props.addTask(title, props.id)
 }
+const changeTodolistTitleHandler = (newTitle: string) => {
+  props.changeTodolistTitle(newTitle, props.id)
+}
 
   return <div>
-    <h3>{props.title}
+    <h3><EditableSpan onChange={changeTodolistTitleHandler} title={props.title}/>
       <button onClick={removeTodolistHandler}>x</button></h3>
     <AddItemForm addItem={addTask}/>
 
     <ul>
       {props.tasks.map((t)=>{
         const removeTaskHandler = ()=>{props.removeTask(t.id, props.id)}
-        const checkedInputHandler = (e: ChangeEvent<HTMLInputElement>) => {props.changeTaskStatus(t.id, e.currentTarget.checked, props.id)
-
+        const checkedInputHandler = (e: ChangeEvent<HTMLInputElement>) =>
+        {props.changeTaskStatus(t.id, e.currentTarget.checked, props.id)}
+        const onChangeTaskTitleHandler = (newValue: string) => {
+          props.changeTaskTitle(t.id, newValue, props.id)
         }
      return <li key={t.id}
                 className={t.isDone? "is-done": ''}
@@ -46,7 +53,9 @@ const addTask = (title: string) => {
                checked={t.isDone}
                onChange={checkedInputHandler}
         />
-        <span>{t.title}</span>
+        <EditableSpan onChange={onChangeTaskTitleHandler}
+                      title={t.title}
+        />
        <button onClick={removeTaskHandler}>X</button>
       </li>
       })}
@@ -64,3 +73,6 @@ const addTask = (title: string) => {
     </div>
   </div>
 }
+
+
+
