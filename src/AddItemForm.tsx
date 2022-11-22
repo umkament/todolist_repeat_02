@@ -1,4 +1,6 @@
 import React, {ChangeEvent, KeyboardEvent, useState} from "react";
+import {Button, TextField} from "@mui/material";
+import {AddToPhotosTwoTone} from "@mui/icons-material";
 
 
 export type AddItemFormPropsType = {
@@ -50,12 +52,22 @@ export function AddItemForm(props: AddItemFormPropsType) {
   }
 
   return <div>
-    <input value={title}
+    <TextField id="filled-basic"
+               label="Type value"
+               variant="filled"
+               value={title}
+               error={!!error}
+               helperText={error}
            onChange={inputOnChangeHandler}
            onKeyPress={inputOnKeyPressHandler}
-           className={error? "error" : ''}
+           //className={error? "error" : ''}
     />
-    <button onClick={buttonOnClickHandler}>+</button>
-    {error && <div className='error-message'>{error}</div>}
+    <Button variant="text"
+            size='large'
+            color='primary'
+            onClick={buttonOnClickHandler}>
+      <AddToPhotosTwoTone/>
+    </Button>
+   {/* {error && <div className='error-message'>{error}</div>}*/}
   </div>
 }

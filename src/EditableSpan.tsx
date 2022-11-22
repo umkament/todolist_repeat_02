@@ -1,4 +1,5 @@
 import React, {ChangeEvent, useState} from "react";
+import {TextField} from "@mui/material";
 
 export type EditableSpanPropsType = {
   onChange: (newTitle: string)=> void
@@ -27,7 +28,7 @@ export function EditableSpan(props: EditableSpanPropsType) {
   // input теряет фокус (onBlur) активируется отрисовка режима false
   // иначе при двойном нажатии на тайтл активируется режи редактирования
   return editMode
-     ? <input value={titleForInput}
+     ? <TextField value={titleForInput}
               onBlur={activeViewMode}
               onChange={onChangeTitleHandler}
               autoFocus

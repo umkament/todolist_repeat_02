@@ -3,6 +3,7 @@ import './App.css';
 import {Todolist} from "./Todolist";
 import {v1} from "uuid";
 import { AddItemForm } from './AddItemForm';
+import {AppBar, Button, Container, Grid, IconButton, Paper, Toolbar, Typography} from "@mui/material";
 
 export type TasksType = {
   id: string
@@ -115,7 +116,29 @@ export function App() {
 
   return (
      <div className="App">
+
+       <AppBar position="static">
+         <Toolbar>
+           <IconButton
+              edge="start"
+              color="inherit"
+              aria-label="menu">
+             Menu
+           </IconButton>
+           <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
+             News
+           </Typography>
+           <Button color="inherit">Login</Button>
+         </Toolbar>
+       </AppBar>
+<Container fixed>
+  <Grid>
        <AddItemForm addItem={addTodolist}/>
+  </Grid>
+  <Grid container
+        item
+        style={{padding: '10px'}}
+  >
        {todolists.map(todolists => {
 
          let tasksForTodolist = tasks[todolists.id]
@@ -126,7 +149,7 @@ export function App() {
            tasksForTodolist = tasksForTodolist.filter(t => t.isDone)
          }
 
-         return <Todolist
+         return <Paper style={{padding: '10px'}}> <Todolist
             key={todolists.id}
             id={todolists.id}
             title={todolists.title}
@@ -140,7 +163,10 @@ export function App() {
             removeTodolist={removeTodolist}
             changeTodolistTitle={changeTodolistTitle}
          />
+         </Paper>
        })}
+  </Grid>
+</Container>
      </div>
   );
 }
