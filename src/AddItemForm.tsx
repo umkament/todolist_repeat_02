@@ -4,7 +4,7 @@ import {AddToPhotosTwoTone} from "@mui/icons-material";
 
 
 export type AddItemFormPropsType = {
-  addItem: (title: string)=>void
+  addItem: (title: string) => void
 }
 
 export function AddItemForm(props: AddItemFormPropsType) {
@@ -42,11 +42,10 @@ export function AddItemForm(props: AddItemFormPropsType) {
   //иначе, если условие не совпадает, отрисовывай ошибку с текстом
   const buttonOnClickHandler = () => {
     setError('')
-    if (title.trim()!=="") {
+    if (title.trim() !== "") {
       props.addItem(title.trim())
       setTitle("")
-    }
-    else {
+    } else {
       setError('title is requered')
     }
   }
@@ -58,9 +57,9 @@ export function AddItemForm(props: AddItemFormPropsType) {
                value={title}
                error={!!error}
                helperText={error}
-           onChange={inputOnChangeHandler}
-           onKeyPress={inputOnKeyPressHandler}
-           //className={error? "error" : ''}
+               onChange={inputOnChangeHandler}
+               onKeyPress={inputOnKeyPressHandler}
+       //className={error? "error" : ''}
     />
     <Button variant="text"
             size='large'
@@ -68,6 +67,6 @@ export function AddItemForm(props: AddItemFormPropsType) {
             onClick={buttonOnClickHandler}>
       <AddToPhotosTwoTone/>
     </Button>
-   {/* {error && <div className='error-message'>{error}</div>}*/}
+    {/* {error && <div className='error-message'>{error}</div>}*/}
   </div>
 }

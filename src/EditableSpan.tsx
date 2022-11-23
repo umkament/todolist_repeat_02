@@ -2,7 +2,7 @@ import React, {ChangeEvent, useState} from "react";
 import {TextField} from "@mui/material";
 
 export type EditableSpanPropsType = {
-  onChange: (newTitle: string)=> void
+  onChange: (newTitle: string) => void
   title: string
 }
 
@@ -29,9 +29,9 @@ export function EditableSpan(props: EditableSpanPropsType) {
   // иначе при двойном нажатии на тайтл активируется режи редактирования
   return editMode
      ? <TextField value={titleForInput}
-              onBlur={activeViewMode}
-              onChange={onChangeTitleHandler}
-              autoFocus
+                  onBlur={activeViewMode}
+                  onChange={onChangeTitleHandler}
+                  autoFocus
      />
      : <span onDoubleClick={activeEditMode}>{props.title}</span>
 }
