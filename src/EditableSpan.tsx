@@ -12,15 +12,18 @@ export function EditableSpan(props: EditableSpanPropsType) {
   let [titleForInput, setTitleForInput] = useState('')
 
   const activeEditMode = () => {
+
     setEditMode(true)
     setTitleForInput(props.title)
   }
   const activeViewMode = () => {
+
     setEditMode(false)
     props.onChange(titleForInput)
   }
 
   const onChangeTitleHandler = (e: ChangeEvent<HTMLInputElement>) => {
+
     setTitleForInput(e.currentTarget.value)
   }
 

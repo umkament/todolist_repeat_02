@@ -51,7 +51,7 @@ export function AddItemForm(props: AddItemFormPropsType) {
   }
 
   return <div>
-    <TextField id="filled-basic"
+    <TextField id="filled"
                label="Type value"
                variant="filled"
                value={title}
